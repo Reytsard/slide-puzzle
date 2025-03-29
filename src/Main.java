@@ -1,12 +1,16 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
 
 public class Main {
     static Scanner scanner = new Scanner(System.in);
-
+    static String[][] gameTiles =  new String[3][3];
+    static JFrame frame = new JFrame("Slide Puzzle");
     public static void main(String[] args) {
-        String[][] gameTiles = new String[3][3];
         initPieces(gameTiles);
         displayTiles(gameTiles);
         ArrayList<Integer> randomMixer = generateMixerValues();
@@ -131,15 +135,33 @@ public class Main {
     }
 
     private static void displayTiles(String[][] gameTiles) {
+
+
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(new GridLayout(3,3));
+
+
         System.out.println("=============================");
         for (String[] row : gameTiles) {
             for (String tile : row) {
+                JPanel panel = new JPanel();
+                JLabel label = new JLabel(tile);
+                label.setAlignmentX(Component.CENTER_ALIGNMENT);
+                label.setAlignmentY(Component.CENTER_ALIGNMENT);
+                panel.add(label);
                 System.out.print(tile + "\t");
             }
             System.out.println();
         }
         System.out.println("=============================");
 
+        frame.pack();
+        if(frame.isVisible()){
+            frame.revalidate();
+            frame.repaint();
+        }else{
+            frame.setVisible(true);
+        }
     }
 
     private static void initPieces(String[][] gameTiles) {
@@ -154,5 +176,47 @@ public class Main {
         gameTiles[2][0] = "7";
         gameTiles[2][1] = "8";
         gameTiles[2][2] = " ";
+
     }
 }
+class PieceKeyListener implements KeyListener {
+    public PieceKeyListener(){
+
+    }
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        System.out.println(e.getKeyCode());
+        int keyCode = e.getKeyCode();
+        switch (keyCode) {
+            case 37 -> moveLeft();
+            case 38 -> moveUp();
+            case 39 -> moveRight();
+            case 40 -> moveDown();
+        }
+    }
+
+    private void moveDown() {
+    }
+
+    private void moveRight() {
+    }
+
+    private void moveUp() {
+    }
+
+    private void moveLeft() {
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
+    }
+}
+
+
+
